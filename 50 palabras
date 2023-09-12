@@ -1,0 +1,23 @@
+from twilio.rest import Client
+
+# Tu cuenta y token de Twilio
+account_sid = 'tu_account_sid'
+auth_token = 'tu_auth_token'
+
+# Crear un cliente de Twilio
+client = Client(account_sid, auth_token)
+
+# Mensaje de texto a enviar
+mensaje = "Este es un mensaje largo que se enviará en fragmentos de 50 palabras. Aquí hay algunas palabras más para llenar el espacio."
+
+# Dividir el mensaje en fragmentos de 50 palabras
+fragmentos = [mensaje[i:i + 50] for i in range(0, len(mensaje), 50)]
+
+# Enviar cada fragmento como un mensaje de texto
+for fragmento in fragmentos:
+    message = client.messages.create(
+        body=fragmento,
+        from_='+1234567890',  # Tu número Twilio
+        to='+9876543210'      # El número al que deseas enviar el mensaje
+    )
+    print(f"Mensaje enviado: {message.sid}")
